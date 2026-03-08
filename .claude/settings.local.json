@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo \"@import ''./styles/variables.css'';:*)",
+      "Bash(\"d:/Idea Projects/invitation-site/src/index.css\")",
+      "Bash(\"d:/Idea Projects/invitation-site/src/App.tsx\":*)",
+      "Bash(\"d:/Idea Projects/invitation-site/src/sections/Invitation.tsx\":*)",
+      "Bash(\"d:/Idea Projects/invitation-site/src/sections/DateSection.tsx\":*)",
+      "Bash(\"d:/Idea Projects/invitation-site/src/sections/LocationSection.tsx\":*)",
+      "Bash(\"d:/Idea Projects/invitation-site/src/sections/TimelineSection.tsx\":*)",
+      "Bash(\"d:/Idea Projects/invitation-site/src/sections/DressCodeSection.tsx\":*)",
+      "Bash(\"d:/Idea Projects/invitation-site/src/sections/DetailsSection.tsx\":*)",
+      "Bash(__NEW_LINE_ca037ca9d748d725__ cat)",
+      "Bash(\"d:/Idea Projects/invitation-site/src/sections/ContactSection.tsx\":*)",
+      "Bash(\"d:/Idea Projects/invitation-site/src/sections/FooterSection.tsx\":*)",
+      "Bash(xargs wc -l)"
+    ]
+  }
+}
