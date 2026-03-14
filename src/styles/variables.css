@@ -1,23 +1,23 @@
 :root {
   /* Colors */
-  --color-bg: #fdf8f4;
-  --color-bg-section: #fff9f6;
-  --color-accent: #c9a882;
-  --color-accent-light: #f0d6d0;
-  --color-text: #4a3728;
-  --color-text-muted: #9b7e6e;
-  --color-divider: #e8d8cc;
+  --color-bg:             #faf7f2;
+  --color-bg-2:           #f5f0e8;
+  --color-surface:        #ffffff;
+  --color-bordeaux:       #8b2635;
+  --color-bordeaux-light: rgba(139, 38, 53, 0.1);
+  --color-pink:           #e8a0a8;
+  --color-text:           #2d2520;
+  --color-text-muted:     #6b5b52;
+  --color-text-light:     #9e8c82;
+  --color-border:         #e0d5cc;
+  --color-heart:          #c0392b;
 
   /* Typography */
-  --font-heading: 'Playfair Display', Georgia, serif;
-  --font-body: 'Nunito', system-ui, sans-serif;
+  --font-script:  'Caveat', cursive;
+  --font-serif:   'Lora', Georgia, serif;
+  --font-sans:    'Inter', sans-serif;
 
-  /* Spacing */
-  --section-padding: 3rem 1.5rem;
+  /* Layout */
   --max-width: 480px;
-
-  /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --section-padding: 3rem 1.5rem;
 }

@@ -1,106 +1,87 @@
 import type { CSSProperties } from 'react'
 
 const events = [
-  { time: '12:00', title: 'Сбор гостей', desc: 'Встреча и приветственный бокал' },
-  { time: '13:00', title: 'Церемония', desc: 'Торжественная регистрация брака' },
-  { time: '14:00', title: 'Фотосессия', desc: 'Прогулка по территории усадьбы' },
-  { time: '15:00', title: 'Банкет', desc: 'Праздничный ужин и танцы' },
-  { time: '18:00', title: 'Торт', desc: 'Разрезание свадебного торта' },
-  { time: '23:00', title: 'Завершение', desc: 'Финальный танец и салют' },
+  { time: '13:00', title: 'Welcome' },
+  { time: '13:30', title: 'Торжественная\nцеремония' },
+  { time: '14:30', title: 'Начало банкета' },
+  { time: '22:00', title: 'Окончание вечера' },
 ]
 
 export default function TimelineSection() {
   return (
-    <section style={styles.section}>
-      <p style={styles.label}>как пройдёт день</p>
-      <h2 style={styles.heading}>Программа</h2>
-      <div style={styles.list}>
-        {events.map((e, i) => (
-          <div key={i} style={styles.item}>
-            <div style={styles.timeCol}>
-              <span style={styles.time}>{e.time}</span>
+    <section style={s.section}>
+      <h2 style={s.heading}>Программа дня</h2>
+
+      <div style={s.list}>
+        {events.map((ev, i) => {
+          const isLeft = i % 2 === 0
+          return (
+            <div key={i} style={{ ...s.item, ...(isLeft ? s.itemLeft : s.itemRight) }}>
+              <div style={s.bubble}>
+                <p style={s.time}>{ev.time}</p>
+                <p style={s.title}>{ev.title}</p>
+              </div>
             </div>
-            <div style={styles.dot} />
-            <div style={styles.textCol}>
-              <p style={styles.title}>{e.title}</p>
-              <p style={styles.desc}>{e.desc}</p>
-            </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </section>
   )
 }
 
-const styles: Record<string, CSSProperties> = {
+const s: Record<string, CSSProperties> = {
   section: {
     padding: '3rem 1.5rem',
     maxWidth: '480px',
     width: '100%',
-    background: '#fff9f6',
-  },
-  label: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '0.8rem',
-    letterSpacing: '0.15em',
-    textTransform: 'uppercase',
-    color: '#9b7e6e',
-    marginBottom: '0.5rem',
-    textAlign: 'center',
+    background: 'var(--color-bg)',
+    borderTop: '1px solid var(--color-border)',
   },
   heading: {
-    fontFamily: 'var(--font-heading)',
-    fontSize: '1.8rem',
-    fontWeight: 400,
-    color: '#4a3728',
+    fontFamily: 'var(--font-script)',
+    fontSize: '2.2rem',
+    fontWeight: 600,
+    color: 'var(--color-text)',
     marginBottom: '2rem',
     textAlign: 'center',
   },
   list: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '0',
+    gap: '1.25rem',
+    position: 'relative',
   },
   item: {
     display: 'flex',
-    alignItems: 'flex-start',
-    gap: '0.75rem',
-    paddingBottom: '1.5rem',
+    width: '60%',
   },
-  timeCol: {
-    minWidth: '52px',
-    textAlign: 'right',
-    paddingTop: '2px',
+  itemLeft: {
+    alignSelf: 'flex-start',
+    marginLeft: '0',
+  },
+  itemRight: {
+    alignSelf: 'flex-end',
+    marginRight: '0',
+  },
+  bubble: {
+    background: 'var(--color-surface)',
+    border: '1px solid var(--color-border)',
+    borderRadius: '12px',
+    padding: '0.85rem 1.1rem',
+    width: '100%',
   },
   time: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '0.85rem',
-    color: '#c9a882',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '1.05rem',
     fontWeight: 600,
-  },
-  dot: {
-    width: '10px',
-    height: '10px',
-    borderRadius: '50%',
-    background: '#c9a882',
-    border: '2px solid #f0d6d0',
-    flexShrink: 0,
-    marginTop: '4px',
-  },
-  textCol: {
-    flex: 1,
+    color: 'var(--color-text)',
+    marginBottom: '0.25rem',
   },
   title: {
-    fontFamily: 'var(--font-body)',
-    fontWeight: 600,
-    fontSize: '0.95rem',
-    color: '#4a3728',
-    marginBottom: '0.2rem',
-  },
-  desc: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '0.85rem',
-    color: '#9b7e6e',
-    lineHeight: 1.5,
+    fontFamily: 'var(--font-serif)',
+    fontSize: '0.9rem',
+    color: 'var(--color-text-muted)',
+    lineHeight: 1.4,
+    whiteSpace: 'pre-line',
   },
 }

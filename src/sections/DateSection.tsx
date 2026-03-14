@@ -1,86 +1,94 @@
 import type { CSSProperties } from 'react'
 
+// Date slider showing days around the wedding date (like in the example)
+const WEDDING_DAY = 7 // June 7
+const MONTH = 'июня'
+
+const days = [5, 6, 7, 8, 9]
+
 export default function DateSection() {
   return (
-    <section style={styles.section}>
-      <p style={styles.label}>запомните эту дату</p>
-      <h2 style={styles.heading}>07 июня 2026</h2>
-      <div style={styles.grid}>
-        <div style={styles.cell}>
-          <span style={styles.number}>07</span>
-          <span style={styles.unit}>день</span>
-        </div>
-        <div style={styles.cell}>
-          <span style={styles.number}>06</span>
-          <span style={styles.unit}>месяц</span>
-        </div>
-        <div style={styles.cell}>
-          <span style={styles.number}>2026</span>
-          <span style={styles.unit}>год</span>
-        </div>
+    <section style={s.section}>
+      <p style={s.label}>наш день</p>
+
+      <div style={s.slider}>
+        {days.map((d) => {
+          const active = d === WEDDING_DAY
+          return (
+            <div key={d} style={{ ...s.dayItem, ...(active ? s.dayActive : {}) }}>
+              <span style={{ ...s.dayNum, ...(active ? s.dayNumActive : {}) }}>
+                {String(d).padStart(2, '0')}
+              </span>
+            </div>
+          )
+        })}
       </div>
-      <p style={styles.caption}>Воскресенье</p>
+
+      <p style={s.month}>{MONTH}</p>
+
+      <p style={s.fullDate}>Воскресенье, 07 июня 2026</p>
     </section>
   )
 }
 
-const styles: Record<string, CSSProperties> = {
+const s: Record<string, CSSProperties> = {
   section: {
     textAlign: 'center',
     padding: '3rem 1.5rem',
     maxWidth: '480px',
     width: '100%',
-    background: '#fff9f6',
+    background: 'var(--color-bg)',
+    borderTop: '1px solid var(--color-border)',
+    borderBottom: '1px solid var(--color-border)',
   },
   label: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '0.8rem',
-    letterSpacing: '0.15em',
-    textTransform: 'uppercase',
-    color: '#9b7e6e',
-    marginBottom: '0.5rem',
+    fontFamily: 'var(--font-serif)',
+    fontSize: '0.85rem',
+    color: 'var(--color-text-light)',
+    marginBottom: '1rem',
+    letterSpacing: '0.05em',
   },
-  heading: {
-    fontFamily: 'var(--font-heading)',
-    fontSize: '2rem',
-    fontWeight: 400,
-    color: '#4a3728',
-    marginBottom: '2rem',
-  },
-  grid: {
+  slider: {
     display: 'flex',
     justifyContent: 'center',
-    gap: '1rem',
-    marginBottom: '1.5rem',
-  },
-  cell: {
-    display: 'flex',
-    flexDirection: 'column',
     alignItems: 'center',
-    background: '#fff',
-    border: '1px solid #e8d8cc',
-    borderRadius: '12px',
-    padding: '1rem 1.2rem',
-    minWidth: '72px',
+    gap: '0.75rem',
+    marginBottom: '0.75rem',
   },
-  number: {
-    fontFamily: 'var(--font-heading)',
-    fontSize: '1.8rem',
-    color: '#c9a882',
-    lineHeight: 1,
-    marginBottom: '0.3rem',
+  dayItem: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '48px',
+    height: '48px',
+    borderRadius: '50%',
+    border: '1.5px solid transparent',
   },
-  unit: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '0.75rem',
-    color: '#9b7e6e',
-    textTransform: 'uppercase',
-    letterSpacing: '0.08em',
+  dayActive: {
+    border: '1.5px solid var(--color-bordeaux)',
+    background: 'var(--color-bordeaux-light)',
   },
-  caption: {
-    fontFamily: 'var(--font-body)',
+  dayNum: {
+    fontFamily: 'var(--font-serif)',
+    fontSize: '1.15rem',
+    color: 'var(--color-text-light)',
+    fontWeight: 400,
+  },
+  dayNumActive: {
+    color: 'var(--color-bordeaux)',
+    fontWeight: 600,
+  },
+  month: {
+    fontFamily: 'var(--font-serif)',
     fontSize: '0.9rem',
-    color: '#9b7e6e',
-    fontStyle: 'italic',
+    color: 'var(--color-text-muted)',
+    marginBottom: '1.5rem',
+    letterSpacing: '0.05em',
+  },
+  fullDate: {
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.8rem',
+    color: 'var(--color-text-light)',
+    letterSpacing: '0.03em',
   },
 }

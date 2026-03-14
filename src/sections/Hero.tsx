@@ -2,67 +2,103 @@ import type { CSSProperties } from 'react'
 
 export default function Hero() {
   return (
-    <section style={styles.section}>
-      <div style={styles.photos}>
-        <div style={styles.photoPlaceholder}>📷 Фото Коли</div>
-        <div style={styles.photoPlaceholder}>📷 Фото Наташи</div>
+    <section style={s.section}>
+      <p style={s.caption}>Вы дождались...</p>
+
+      <h1 style={s.title}>Мы женимся!</h1>
+
+      <div style={s.photoRow}>
+        <div style={s.photoBox}>
+          <div style={s.photoPlaceholder}>🤵</div>
+          <p style={s.photoName}>Коля</p>
+        </div>
+
+        <span style={s.heart}>♥</span>
+
+        <div style={s.photoBox}>
+          <div style={s.photoPlaceholder}>👰</div>
+          <p style={s.photoName}>Наташа</p>
+        </div>
       </div>
-      <p style={styles.label}>мы создаём семью</p>
-      <h1 style={styles.names}>Коля &amp; Наташа</h1>
-      <p style={styles.date}>07 июня 2026</p>
+
+      <div style={s.deco}>
+        <span style={s.decoHeart}>♡</span>
+        <span style={s.decoHeart}>♡</span>
+        <span style={s.decoHeart}>♡</span>
+      </div>
     </section>
   )
 }
 
-const styles: Record<string, CSSProperties> = {
+const s: Record<string, CSSProperties> = {
   section: {
     textAlign: 'center',
-    paddingTop: '4rem',
-    paddingBottom: '3rem',
-    paddingLeft: '1.5rem',
-    paddingRight: '1.5rem',
-    background: 'linear-gradient(180deg, #fff5f0 0%, #fdf8f4 100%)',
+    padding: '4rem 1.5rem 3rem',
+    background: 'var(--color-bg)',
     width: '100%',
     maxWidth: '480px',
   },
-  photos: {
-    display: 'flex',
-    gap: '1rem',
-    justifyContent: 'center',
+  caption: {
+    fontFamily: 'var(--font-serif)',
+    fontSize: '0.95rem',
+    color: 'var(--color-text-light)',
+    marginBottom: '0.25rem',
+    fontStyle: 'italic',
+  },
+  title: {
+    fontFamily: 'var(--font-script)',
+    fontSize: '3.5rem',
+    fontWeight: 700,
+    color: 'var(--color-text)',
+    lineHeight: 1.1,
     marginBottom: '2rem',
   },
-  photoPlaceholder: {
-    width: '130px',
-    height: '160px',
-    background: '#f0d6d0',
-    borderRadius: '12px',
+  photoRow: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '0.8rem',
-    color: '#9b7e6e',
-    fontFamily: 'var(--font-body)',
+    gap: '1rem',
+    marginBottom: '1.5rem',
   },
-  label: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '0.85rem',
-    letterSpacing: '0.15em',
-    textTransform: 'uppercase',
-    color: '#9b7e6e',
-    marginBottom: '0.5rem',
+  photoBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '0.5rem',
+    flex: 1,
+    maxWidth: '140px',
   },
-  names: {
-    fontFamily: 'var(--font-heading)',
-    fontSize: '2.8rem',
-    fontWeight: 400,
-    color: '#4a3728',
-    marginBottom: '0.75rem',
-    lineHeight: 1.2,
+  photoPlaceholder: {
+    width: '100%',
+    aspectRatio: '3/4',
+    background: 'var(--color-bg-2)',
+    border: '1px solid var(--color-border)',
+    borderRadius: '8px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '3rem',
   },
-  date: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '1.1rem',
-    color: '#c9a882',
-    letterSpacing: '0.05em',
+  photoName: {
+    fontFamily: 'var(--font-script)',
+    fontSize: '1.6rem',
+    color: 'var(--color-bordeaux)',
+    fontWeight: 600,
+    margin: 0,
+    lineHeight: 1,
+  },
+  heart: {
+    fontSize: '2rem',
+    color: 'var(--color-heart)',
+    flexShrink: 0,
+  },
+  deco: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '0.75rem',
+  },
+  decoHeart: {
+    fontSize: '1.2rem',
+    color: 'var(--color-pink)',
   },
 }

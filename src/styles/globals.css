@@ -4,8 +4,12 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: var(--font-body);
+  font-family: var(--font-serif);
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
@@ -23,27 +27,101 @@ section {
   width: 100%;
   max-width: var(--max-width);
   padding: var(--section-padding);
+  position: relative;
 }
 
 h1, h2, h3 {
-  font-family: var(--font-heading);
-  font-weight: 400;
+  font-family: var(--font-script);
+  font-weight: 600;
   color: var(--color-text);
 }
 
 p {
+  font-family: var(--font-serif);
   color: var(--color-text-muted);
   font-size: 1rem;
-  line-height: 1.7;
-}
-
-hr {
-  border: none;
-  border-top: 1px solid var(--color-divider);
-  margin: 2rem 0;
+  line-height: 1.75;
 }
 
 a {
-  color: var(--color-accent);
+  color: var(--color-bordeaux);
   text-decoration: none;
+}
+
+/* ── divider ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.divider span {
+  color: var(--color-bordeaux);
+  font-size: 1rem;
+}
+
+/* ── primary button ── */
+.btn-primary {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #ffffff;
+  background: var(--color-bordeaux);
+  border: none;
+  border-radius: 8px;
+  padding: 0.85rem 2rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+}
+
+/* ── outline button ── */
+.btn-outline {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-bordeaux);
+  background: transparent;
+  border: 1.5px solid var(--color-bordeaux);
+  border-radius: 20px;
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  background: var(--color-bordeaux);
+  color: #ffffff;
+}
+
+/* ── fade-in animation ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes countUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
 }

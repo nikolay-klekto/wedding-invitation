@@ -2,53 +2,67 @@ import type { CSSProperties } from 'react'
 
 export default function Invitation() {
   return (
-    <section style={styles.section}>
-      <h2 style={styles.heading}>Дорогие друзья</h2>
-      <hr style={styles.divider} />
-      <p style={styles.text}>
-        С огромной радостью и трепетом в сердце мы приглашаем вас разделить
-        с нами один из самых светлых дней нашей жизни — день нашей свадьбы.
+    <section style={s.section}>
+      <h2 style={s.heading}>Дорогие наши гости</h2>
+
+      <p style={s.text}>
+        Мы приглашаем вас разделить с нами одно из важных событий —
       </p>
-      <p style={styles.text}>
-        Ваше присутствие рядом сделает этот праздник по-настоящему особенным
-        и наполнит его теплом и любовью.
-      </p>
-      <p style={styles.signature}>С любовью, Коля и Наташа 🤍</p>
+
+      <p style={s.accent}>НАШУ СВАДЬБУ</p>
+
+      <div style={s.heartRow}>
+        <span style={s.bow}>🎀</span>
+        <span style={s.heartIcon}>❤</span>
+        <span style={s.bow}>🎀</span>
+      </div>
     </section>
   )
 }
 
-const styles: Record<string, CSSProperties> = {
+const s: Record<string, CSSProperties> = {
   section: {
     textAlign: 'center',
-    padding: '3rem 1.5rem',
+    padding: '3rem 1.5rem 2rem',
     maxWidth: '480px',
     width: '100%',
+    background: 'var(--color-bg)',
   },
   heading: {
-    fontFamily: 'var(--font-heading)',
-    fontSize: '1.8rem',
-    fontWeight: 400,
-    color: '#4a3728',
-    marginBottom: '1rem',
-  },
-  divider: {
-    border: 'none',
-    borderTop: '1px solid #e8d8cc',
-    marginBottom: '1.5rem',
+    fontFamily: 'var(--font-script)',
+    fontSize: '2.4rem',
+    fontWeight: 600,
+    color: 'var(--color-text)',
+    lineHeight: 1.2,
+    marginBottom: '1.25rem',
   },
   text: {
-    fontFamily: 'var(--font-body)',
+    fontFamily: 'var(--font-serif)',
     fontSize: '1rem',
-    color: '#7a5c4f',
-    lineHeight: 1.8,
-    marginBottom: '1rem',
+    color: 'var(--color-text-muted)',
+    lineHeight: 1.7,
+    marginBottom: '0.75rem',
   },
-  signature: {
-    fontFamily: 'var(--font-heading)',
-    fontStyle: 'italic',
+  accent: {
+    fontFamily: 'var(--font-sans)',
     fontSize: '1.1rem',
-    color: '#c9a882',
-    marginTop: '1.5rem',
+    fontWeight: 600,
+    letterSpacing: '0.08em',
+    color: 'var(--color-bordeaux)',
+    marginBottom: '2rem',
+  },
+  heartRow: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '1rem',
+    fontSize: '1.5rem',
+  },
+  bow: {
+    fontSize: '1.5rem',
+  },
+  heartIcon: {
+    fontSize: '1.25rem',
+    color: 'var(--color-heart)',
   },
 }

@@ -2,17 +2,25 @@ import { useState, type CSSProperties, type FormEvent } from 'react'
 
 type FormState = {
   name: string
-  attending: 'yes' | 'no' | ''
-  guests: string
-  comment: string
+  attending: 'yes' | 'no' | 'later' | ''
+  allergy: string
+  drinks: string[]
 }
+
+const drinkOptions = [
+  'Шампанское',
+  'Красное вино',
+  'Белое вино',
+  'Коньяк',
+  'Безалкогольные напитки',
+]
 
 export default function RSVPSection() {
   const [form, setForm] = useState<FormState>({
     name: '',
     attending: '',
-    guests: '1',
-    comment: '',
+    allergy: '',
+    drinks: [],
   })
   const [submitted, setSubmitted] = useState(false)
 
@@ -22,189 +30,274 @@ export default function RSVPSection() {
     setSubmitted(true)
   }
 
+  function toggleDrink(drink: string) {
+    setForm((f) => ({
+      ...f,
+      drinks: f.drinks.includes(drink)
+        ? f.drinks.filter((d) => d !== drink)
+        : [...f.drinks, drink],
+    }))
+  }
+
   if (submitted) {
     return (
-      <section style={styles.section}>
-        <div style={styles.thanks}>
-          <p style={styles.thanksIcon}>🌸</p>
-          <h2 style={styles.heading}>Спасибо!</h2>
-          <p style={styles.thanksText}>Мы получили ваш ответ и очень ждём вас!</p>
+      <section style={s.section}>
+        <div style={s.thanks}>
+          <h2 style={s.thanksHeading}>Анкета</h2>
+          <p style={s.thanksText}>
+            Спасибо! Мы получили ваш ответ.<br />
+            Ждём вас 07 июня 2026 ♥
+          </p>
         </div>
       </section>
     )
   }
 
   return (
-    <section style={styles.section}>
-      <p style={styles.label}>подтвердите участие</p>
-      <h2 style={styles.heading}>RSVP</h2>
-      <p style={styles.subtitle}>Пожалуйста, ответьте до 1 мая 2026</p>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <div style={styles.field}>
-          <label style={styles.fieldLabel}>Ваше имя *</label>
+    <section style={s.section}>
+      <h2 style={s.heading}>Анкета</h2>
+      <p style={s.subtitle}>
+        Просим вас сообщить, сможете вы быть с нами, заполнив форму ниже:
+      </p>
+
+      <form onSubmit={handleSubmit} style={s.form}>
+        {/* Name */}
+        <div style={s.field}>
+          <label style={s.label}>Имя и Фамилия</label>
           <input
-            style={styles.input}
+            style={s.input}
             type="text"
             required
-            placeholder="Имя и фамилия"
+            placeholder=""
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
+          <div style={s.underline} />
         </div>
-        <div style={styles.field}>
-          <label style={styles.fieldLabel}>Вы придёте? *</label>
-          <div style={styles.radioGroup}>
-            <label style={styles.radioLabel}>
-              <input
-                type="radio"
-                name="attending"
-                value="yes"
-                required
-                checked={form.attending === 'yes'}
-                onChange={() => setForm({ ...form, attending: 'yes' })}
-              />
-              <span>Да, буду!</span>
-            </label>
-            <label style={styles.radioLabel}>
-              <input
-                type="radio"
-                name="attending"
-                value="no"
-                checked={form.attending === 'no'}
-                onChange={() => setForm({ ...form, attending: 'no' })}
-              />
-              <span>К сожалению, нет</span>
-            </label>
+
+        {/* Attending */}
+        <div style={s.field}>
+          <label style={s.label}>Подтвердите присутствие на торжестве</label>
+          <div style={s.radioGroup}>
+            {[
+              { val: 'yes',   text: 'Смогу прийти' },
+              { val: 'no',    text: 'Не смогу прийти' },
+              { val: 'later', text: 'Сообщу позже' },
+            ].map(({ val, text }) => (
+              <label key={val} style={s.radioRow}>
+                <div style={{
+                  ...s.radio,
+                  ...(form.attending === val ? s.radioChecked : {}),
+                }}>
+                  {form.attending === val && <div style={s.radioDot} />}
+                </div>
+                <input
+                  type="radio"
+                  name="attending"
+                  value={val}
+                  required
+                  checked={form.attending === val}
+                  onChange={() => setForm({ ...form, attending: val as FormState['attending'] })}
+                  style={{ display: 'none' }}
+                />
+                <span style={s.radioLabel}>{text}</span>
+              </label>
+            ))}
           </div>
         </div>
-        {form.attending === 'yes' && (
-          <div style={styles.field}>
-            <label style={styles.fieldLabel}>Количество гостей</label>
-            <select
-              style={styles.input}
-              value={form.guests}
-              onChange={(e) => setForm({ ...form, guests: e.target.value })}
-            >
-              {['1', '2', '3', '4'].map((n) => (
-                <option key={n} value={n}>{n}</option>
-              ))}
-            </select>
-          </div>
-        )}
-        <div style={styles.field}>
-          <label style={styles.fieldLabel}>Пожелания / аллергии</label>
-          <textarea
-            style={{ ...styles.input, ...styles.textarea }}
-            placeholder="Необязательно..."
-            value={form.comment}
-            onChange={(e) => setForm({ ...form, comment: e.target.value })}
+
+        {/* Allergy */}
+        <div style={s.field}>
+          <label style={s.label}>Есть ли у вас аллергические реакции или ограничения по питанию?</label>
+          <input
+            style={s.input}
+            type="text"
+            placeholder=""
+            value={form.allergy}
+            onChange={(e) => setForm({ ...form, allergy: e.target.value })}
           />
+          <div style={s.underline} />
         </div>
-        <button type="submit" style={styles.button}>Отправить ответ</button>
+
+        {/* Drinks */}
+        <div style={s.field}>
+          <label style={s.label}>Предпочтения по напиткам</label>
+          <div style={s.checkboxGroup}>
+            {drinkOptions.map((drink) => (
+              <label key={drink} style={s.checkRow}>
+                <div style={{
+                  ...s.checkbox,
+                  ...(form.drinks.includes(drink) ? s.checkboxChecked : {}),
+                }}>
+                  {form.drinks.includes(drink) && <span style={s.checkmark}>✓</span>}
+                </div>
+                <input
+                  type="checkbox"
+                  checked={form.drinks.includes(drink)}
+                  onChange={() => toggleDrink(drink)}
+                  style={{ display: 'none' }}
+                />
+                <span style={s.checkLabel}>{drink}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <button type="submit" className="btn-primary" style={s.btn}>
+          Отправить
+        </button>
       </form>
     </section>
   )
 }
 
-const styles: Record<string, CSSProperties> = {
+const s: Record<string, CSSProperties> = {
   section: {
-    textAlign: 'center',
     padding: '3rem 1.5rem',
     maxWidth: '480px',
     width: '100%',
-    background: '#fff9f6',
-  },
-  label: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '0.8rem',
-    letterSpacing: '0.15em',
-    textTransform: 'uppercase',
-    color: '#9b7e6e',
-    marginBottom: '0.5rem',
+    background: 'var(--color-bg)',
+    borderTop: '1px solid var(--color-border)',
   },
   heading: {
-    fontFamily: 'var(--font-heading)',
-    fontSize: '1.8rem',
-    fontWeight: 400,
-    color: '#4a3728',
+    fontFamily: 'var(--font-script)',
+    fontSize: '2.2rem',
+    fontWeight: 600,
+    color: 'var(--color-text)',
     marginBottom: '0.5rem',
+    textAlign: 'center',
   },
   subtitle: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '0.9rem',
-    color: '#9b7e6e',
-    marginBottom: '1.75rem',
+    fontFamily: 'var(--font-serif)',
+    fontSize: '0.95rem',
+    color: 'var(--color-text-muted)',
+    lineHeight: 1.6,
+    marginBottom: '2rem',
+    textAlign: 'center',
   },
   form: {
-    textAlign: 'left',
     display: 'flex',
     flexDirection: 'column',
-    gap: '1.25rem',
+    gap: '1.75rem',
   },
   field: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '0.4rem',
+    gap: '0.5rem',
   },
-  fieldLabel: {
-    fontFamily: 'var(--font-body)',
+  label: {
+    fontFamily: 'var(--font-sans)',
     fontSize: '0.85rem',
-    fontWeight: 600,
-    color: '#4a3728',
+    color: 'var(--color-text-muted)',
+    lineHeight: 1.4,
   },
   input: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '0.95rem',
-    color: '#4a3728',
-    padding: '0.65rem 0.9rem',
-    border: '1px solid #e8d8cc',
-    borderRadius: '10px',
-    background: '#fff',
+    fontFamily: 'var(--font-serif)',
+    fontSize: '1rem',
+    color: 'var(--color-text)',
+    padding: '0.4rem 0',
+    border: 'none',
+    borderBottom: '1px solid var(--color-border)',
+    background: 'transparent',
     outline: 'none',
     width: '100%',
   },
-  textarea: {
-    minHeight: '80px',
-    resize: 'vertical' as const,
+  underline: {
+    display: 'none',
   },
   radioGroup: {
     display: 'flex',
-    gap: '1rem',
+    flexDirection: 'column',
+    gap: '0.75rem',
+    marginTop: '0.25rem',
   },
-  radioLabel: {
+  radioRow: {
     display: 'flex',
     alignItems: 'center',
-    gap: '0.4rem',
-    fontFamily: 'var(--font-body)',
-    fontSize: '0.95rem',
-    color: '#4a3728',
+    gap: '0.75rem',
     cursor: 'pointer',
   },
-  button: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '1rem',
-    fontWeight: 600,
-    color: '#fff',
-    background: '#c9a882',
-    border: 'none',
-    borderRadius: '50px',
-    padding: '0.85rem',
+  radio: {
+    width: '20px',
+    height: '20px',
+    borderRadius: '50%',
+    border: '1.5px solid var(--color-border)',
+    flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'border-color 0.15s',
+  },
+  radioChecked: {
+    borderColor: 'var(--color-bordeaux)',
+  },
+  radioDot: {
+    width: '10px',
+    height: '10px',
+    borderRadius: '50%',
+    background: 'var(--color-bordeaux)',
+  },
+  radioLabel: {
+    fontFamily: 'var(--font-serif)',
+    fontSize: '0.95rem',
+    color: 'var(--color-text)',
+  },
+  checkboxGroup: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.75rem',
+    marginTop: '0.25rem',
+  },
+  checkRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.75rem',
     cursor: 'pointer',
-    letterSpacing: '0.03em',
+  },
+  checkbox: {
+    width: '20px',
+    height: '20px',
+    border: '1.5px solid var(--color-border)',
+    borderRadius: '4px',
+    flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'border-color 0.15s, background 0.15s',
+  },
+  checkboxChecked: {
+    borderColor: 'var(--color-bordeaux)',
+    background: 'var(--color-bordeaux)',
+  },
+  checkmark: {
+    color: '#ffffff',
+    fontSize: '0.75rem',
+    lineHeight: 1,
+  },
+  checkLabel: {
+    fontFamily: 'var(--font-serif)',
+    fontSize: '0.95rem',
+    color: 'var(--color-text)',
+  },
+  btn: {
     width: '100%',
+    textAlign: 'center' as const,
     marginTop: '0.5rem',
   },
   thanks: {
-    padding: '2rem 0',
+    textAlign: 'center' as const,
+    padding: '1rem 0',
   },
-  thanksIcon: {
-    fontSize: '3rem',
+  thanksHeading: {
+    fontFamily: 'var(--font-script)',
+    fontSize: '2rem',
+    color: 'var(--color-text)',
     marginBottom: '1rem',
   },
   thanksText: {
-    fontFamily: 'var(--font-body)',
+    fontFamily: 'var(--font-serif)',
     fontSize: '1rem',
-    color: '#7a5c4f',
-    marginTop: '0.5rem',
+    color: 'var(--color-text-muted)',
+    lineHeight: 1.7,
   },
 }

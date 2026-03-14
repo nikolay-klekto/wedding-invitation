@@ -2,76 +2,73 @@ import type { CSSProperties } from 'react'
 
 export default function DetailsSection() {
   return (
-    <section style={styles.section}>
-      <p style={styles.label}>важные детали</p>
-      <h2 style={styles.heading}>Подарки</h2>
-      <div style={styles.card}>
-        <p style={styles.emoji}>🤍</p>
-        <p style={styles.text}>
-          Самый дорогой подарок для нас — ваше присутствие и тёплые слова.
-        </p>
-        <p style={styles.text}>
-          Если вы хотите сделать нам подарок — мы будем рады вкладу в наш
-          «конверт для мечты» — на путешествие в медовый месяц.
-        </p>
-        <div style={styles.infoBox}>
-          <p style={styles.infoLabel}>Реквизиты уточните у организатора</p>
-        </div>
+    <section style={s.section}>
+      <h2 style={s.heading}>Детали</h2>
+
+      <div style={s.divider}>
+        <span style={s.arrow}>❧</span>
+        <span style={s.heartSmall}>♥</span>
+        <span style={s.arrow}>❧</span>
       </div>
+
+      <p style={s.text}>
+        Ваши улыбки и смех подарят нам незабываемое счастье в этот день,
+        а пожелания в конвертах помогут осуществить <strong>НАШИ мечты!</strong>
+      </p>
+
+      <div style={s.dividerSimple} />
+
+      <p style={s.text}>
+        Приятным комплиментом для нас вместо цветов будет бутылочка вашего
+        любимого вина, которую мы откроем на ближайшем совместном празднике.
+      </p>
     </section>
   )
 }
 
-const styles: Record<string, CSSProperties> = {
+const s: Record<string, CSSProperties> = {
   section: {
     textAlign: 'center',
     padding: '3rem 1.5rem',
     maxWidth: '480px',
     width: '100%',
-    background: '#fff9f6',
-  },
-  label: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '0.8rem',
-    letterSpacing: '0.15em',
-    textTransform: 'uppercase',
-    color: '#9b7e6e',
-    marginBottom: '0.5rem',
+    background: 'var(--color-bg)',
+    borderTop: '1px solid var(--color-border)',
   },
   heading: {
-    fontFamily: 'var(--font-heading)',
-    fontSize: '1.8rem',
-    fontWeight: 400,
-    color: '#4a3728',
-    marginBottom: '1.5rem',
-  },
-  card: {
-    background: '#fff',
-    border: '1px solid #e8d8cc',
-    borderRadius: '16px',
-    padding: '1.5rem',
-  },
-  emoji: {
-    fontSize: '2rem',
+    fontFamily: 'var(--font-script)',
+    fontSize: '2.2rem',
+    fontWeight: 600,
+    color: 'var(--color-text)',
     marginBottom: '1rem',
   },
-  text: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '0.95rem',
-    color: '#7a5c4f',
-    lineHeight: 1.7,
-    marginBottom: '0.75rem',
+  divider: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '0.5rem',
+    marginBottom: '1.25rem',
+    color: 'var(--color-pink)',
   },
-  infoBox: {
-    marginTop: '1rem',
-    padding: '0.75rem',
-    background: '#f0d6d0',
-    borderRadius: '10px',
+  arrow: {
+    fontSize: '1.1rem',
+    color: 'var(--color-pink)',
   },
-  infoLabel: {
-    fontFamily: 'var(--font-body)',
+  heartSmall: {
     fontSize: '0.85rem',
-    color: '#7a5c4f',
-    fontStyle: 'italic',
+    color: 'var(--color-heart)',
+  },
+  dividerSimple: {
+    width: '60px',
+    height: '1px',
+    background: 'var(--color-border)',
+    margin: '1.25rem auto',
+  },
+  text: {
+    fontFamily: 'var(--font-serif)',
+    fontSize: '0.95rem',
+    color: 'var(--color-text-muted)',
+    lineHeight: 1.8,
+    textAlign: 'center',
   },
 }
