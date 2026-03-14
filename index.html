@@ -11,9 +11,85 @@
       href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <style>
+      #native-loader {
+        position: fixed;
+        inset: 0;
+        background: #faf7f2;
+        z-index: 9999;
+        transition: opacity 0.6s ease;
+      }
+      #native-loader.done {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #native-loader-count {
+        position: absolute;
+        bottom: 3rem;
+        right: 2rem;
+        font-family: Georgia, serif;
+        font-size: 1.1rem;
+        font-weight: 400;
+        color: #2d2520;
+        letter-spacing: 0.02em;
+        transition: bottom 0.15s ease-out;
+      }
+    </style>
   </head>
   <body>
+    <div id="native-loader">
+      <div id="native-loader-count">0%</div>
+    </div>
+
     <div id="root"></div>
+
+    <script>
+      (function () {
+        var el = document.getElementById('native-loader-count');
+        var n = 0;
+        var reactReady = false;
+        var countDone = false;
+
+        function hideLoader() {
+          var loader = document.getElementById('native-loader');
+          if (!loader) return;
+          loader.classList.add('done');
+          setTimeout(function () { loader.remove(); }, 700);
+        }
+
+        function checkDone() {
+          if (reactReady && countDone) hideLoader();
+        }
+
+        // React calls this when it's mounted and ready
+        window.__reactReady = function () {
+          reactReady = true;
+          checkDone();
+        };
+
+        function tick() {
+          n++;
+          if (el) {
+            el.textContent = n + '%';
+            // Move from bottom (3rem) to top (calc 100vh - 5rem) proportionally
+            var minBottom = 48; // 3rem in px
+            var maxBottom = window.innerHeight - 80; // near top
+            var bottom = minBottom + (n / 100) * (maxBottom - minBottom);
+            el.style.bottom = bottom + 'px';
+          }
+          if (n >= 100) {
+            countDone = true;
+            checkDone();
+            return;
+          }
+          var delay = n < 30 ? 40 : n < 70 ? 25 : n < 90 ? 18 : 12;
+          setTimeout(tick, delay);
+        }
+
+        setTimeout(tick, 40);
+      })();
+    </script>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

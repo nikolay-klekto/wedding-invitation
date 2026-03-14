@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import './App.css'
-import LoadingScreen from './sections/LoadingScreen'
 import Hero from './sections/Hero'
 import Invitation from './sections/Invitation'
 import DateSection from './sections/DateSection'
@@ -12,12 +11,20 @@ import ContactSection from './sections/ContactSection'
 import RSVPSection from './sections/RSVPSection'
 import FooterSection from './sections/FooterSection'
 
+declare global {
+  interface Window {
+    __reactReady?: () => void
+  }
+}
+
 function App() {
-  const [loaded, setLoaded] = useState(false)
+  useEffect(() => {
+    // Signal to the native HTML loader that React is mounted and ready
+    window.__reactReady?.()
+  }, [])
 
   return (
     <>
-      {!loaded && <LoadingScreen onDone={() => setLoaded(true)} />}
       <Hero />
       <Invitation />
       <DateSection />
