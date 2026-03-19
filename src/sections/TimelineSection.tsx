@@ -1,87 +1,135 @@
-import type { CSSProperties } from 'react'
-
 const events = [
-  { time: '13:00', title: 'Welcome' },
-  { time: '13:30', title: 'Торжественная\nцеремония' },
-  { time: '14:30', title: 'Начало банкета' },
-  { time: '22:00', title: 'Окончание вечера' },
+  { time: '13:00', title: 'Welcome', side: 'left' },
+  { time: '13:30', title: 'Торжественная\nцеремония', side: 'right' },
+  { time: '14:30', title: 'Начало банкета', side: 'left' },
+  { time: '22:00', title: 'Окончание вечера', side: 'right' },
 ]
+
+const BLOCK_H = 110
+const TOP_PAD = 20
+const TOTAL_H = events.length * BLOCK_H + TOP_PAD * 2
+const W = 280
+const MID = W / 2
+
+function snakePath() {
+  const pts = events.map((ev, i) => ({
+    x: ev.side === 'left' ? W * 0.72 : W * 0.28,
+    y: TOP_PAD + i * BLOCK_H + BLOCK_H / 2,
+  }))
+
+  const start = { x: W * 0.1, y: 0 }
+  const end = { x: W * 0.9, y: TOTAL_H }
+
+  let d = `M ${start.x} ${start.y}`
+  const allPts = [start, ...pts, end]
+  for (let i = 1; i < allPts.length; i++) {
+    const prev = allPts[i - 1]
+    const curr = allPts[i]
+    const cy = (prev.y + curr.y) / 2
+    d += ` C ${prev.x},${cy} ${curr.x},${cy} ${curr.x},${curr.y}`
+  }
+  return d
+}
 
 export default function TimelineSection() {
   return (
-    <section style={s.section}>
-      <h2 style={s.heading}>Программа дня</h2>
+    <section className="timeline-section">
+      <h2 className="timeline-heading">Программа дня</h2>
 
-      <div style={s.list}>
-        {events.map((ev, i) => {
-          const isLeft = i % 2 === 0
-          return (
-            <div key={i} style={{ ...s.item, ...(isLeft ? s.itemLeft : s.itemRight) }}>
-              <div style={s.bubble}>
-                <p style={s.time}>{ev.time}</p>
-                <p style={s.title}>{ev.title}</p>
-              </div>
-            </div>
-          )
-        })}
+      <div className="timeline-body">
+        {/* Snake SVG line */}
+        <svg
+          className="timeline-snake"
+          viewBox={`0 0 ${W} ${TOTAL_H}`}
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <path
+            d={snakePath()}
+            fill="none"
+            stroke="#8b2635"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+        </svg>
+
+        {/* Event blocks */}
+        {events.map((ev, i) => (
+          <div
+            key={i}
+            className={`timeline-item timeline-item--${ev.side}`}
+            style={{ top: TOP_PAD + i * BLOCK_H + BLOCK_H / 2 - 28 }}
+          >
+            <p className="timeline-time">{ev.time}</p>
+            <p className="timeline-title">{ev.title}</p>
+          </div>
+        ))}
       </div>
+
+      <style>{css}</style>
     </section>
   )
 }
 
-const s: Record<string, CSSProperties> = {
-  section: {
-    padding: '3rem 1.5rem',
-    maxWidth: '480px',
-    width: '100%',
-    background: 'var(--color-bg)',
-    borderTop: '1px solid var(--color-border)',
-  },
-  heading: {
-    fontFamily: 'var(--font-script)',
-    fontSize: '2.2rem',
-    fontWeight: 600,
-    color: 'var(--color-text)',
-    marginBottom: '2rem',
-    textAlign: 'center',
-  },
-  list: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1.25rem',
-    position: 'relative',
-  },
-  item: {
-    display: 'flex',
-    width: '60%',
-  },
-  itemLeft: {
-    alignSelf: 'flex-start',
-    marginLeft: '0',
-  },
-  itemRight: {
-    alignSelf: 'flex-end',
-    marginRight: '0',
-  },
-  bubble: {
-    background: 'var(--color-surface)',
-    border: '1px solid var(--color-border)',
-    borderRadius: '12px',
-    padding: '0.85rem 1.1rem',
-    width: '100%',
-  },
-  time: {
-    fontFamily: 'var(--font-sans)',
-    fontSize: '1.05rem',
-    fontWeight: 600,
-    color: 'var(--color-text)',
-    marginBottom: '0.25rem',
-  },
-  title: {
-    fontFamily: 'var(--font-serif)',
-    fontSize: '0.9rem',
-    color: 'var(--color-text-muted)',
-    lineHeight: 1.4,
-    whiteSpace: 'pre-line',
-  },
+const css = `
+.timeline-section {
+  padding: 3rem 1.5rem;
+  max-width: 480px;
+  width: 100%;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
 }
+
+.timeline-heading {
+  font-family: var(--font-script);
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.timeline-body {
+  position: relative;
+  width: 280px;
+  margin: 0 auto;
+  height: ${TOTAL_H}px;
+}
+
+.timeline-snake {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.timeline-item {
+  position: absolute;
+  width: 44%;
+}
+
+.timeline-item--left {
+  left: 0;
+  text-align: left;
+}
+
+.timeline-item--right {
+  right: 0;
+  text-align: right;
+}
+
+.timeline-time {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.timeline-title {
+  font-family: var(--font-serif);
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  white-space: pre-line;
+}
+`

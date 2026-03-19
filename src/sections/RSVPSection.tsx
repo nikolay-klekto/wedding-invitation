@@ -26,7 +26,24 @@ export default function RSVPSection() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    localStorage.setItem('rsvp', JSON.stringify(form))
+
+    const ACTION = 'https://docs.google.com/forms/u/0/d/1uD5cnzePXL3dN2avd6KHpn-QlVgrCrGC9Gv3gLiAsc4/formResponse'
+
+    const attendingMap: Record<string, string> = {
+      yes:   'Смогу прийти',
+      no:    'Не смогу прийти',
+      later: 'Сообщу позже',
+    }
+
+    const body = new FormData()
+    body.append('entry.145834640', form.name)
+    body.append('entry.224664885', form.allergy)
+    if (form.attending) body.append('entry.30633168', attendingMap[form.attending])
+    form.drinks.forEach((d) => body.append('entry.165075308', d))
+
+    // no-cors because Google Forms doesn't allow cross-origin — response is opaque but data is saved
+    fetch(ACTION, { method: 'POST', body, mode: 'no-cors' }).catch(() => {})
+
     setSubmitted(true)
   }
 
