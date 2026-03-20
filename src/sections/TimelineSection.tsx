@@ -1,34 +1,33 @@
 const events = [
-  { time: '13:00', title: 'Welcome', side: 'left' },
-  { time: '13:30', title: 'Торжественная\nцеремония', side: 'right' },
-  { time: '14:30', title: 'Начало банкета', side: 'left' },
-  { time: '22:00', title: 'Окончание вечера', side: 'right' },
-]
+  { time: "13:00", title: "Welcome", side: "left" },
+  { time: "13:30", title: "Торжественная\nцеремония", side: "right" },
+  { time: "14:30", title: "Начало банкета", side: "left" },
+  { time: "22:00", title: "Окончание вечера", side: "right" },
+];
 
-const BLOCK_H = 110
-const TOP_PAD = 20
-const TOTAL_H = events.length * BLOCK_H + TOP_PAD * 2
-const W = 280
-const MID = W / 2
+const BLOCK_H = 110;
+const TOP_PAD = 20;
+const TOTAL_H = events.length * BLOCK_H + TOP_PAD * 2;
+const W = 280;
 
 function snakePath() {
   const pts = events.map((ev, i) => ({
-    x: ev.side === 'left' ? W * 0.72 : W * 0.28,
+    x: ev.side === "left" ? W * 0.72 : W * 0.28,
     y: TOP_PAD + i * BLOCK_H + BLOCK_H / 2,
-  }))
+  }));
 
-  const start = { x: W * 0.1, y: 0 }
-  const end = { x: W * 0.9, y: TOTAL_H }
+  const start = { x: W * 0.1, y: 0 };
+  const end = { x: W * 0.9, y: TOTAL_H };
 
-  let d = `M ${start.x} ${start.y}`
-  const allPts = [start, ...pts, end]
+  let d = `M ${start.x} ${start.y}`;
+  const allPts = [start, ...pts, end];
   for (let i = 1; i < allPts.length; i++) {
-    const prev = allPts[i - 1]
-    const curr = allPts[i]
-    const cy = (prev.y + curr.y) / 2
-    d += ` C ${prev.x},${cy} ${curr.x},${cy} ${curr.x},${curr.y}`
+    const prev = allPts[i - 1];
+    const curr = allPts[i];
+    const cy = (prev.y + curr.y) / 2;
+    d += ` C ${prev.x},${cy} ${curr.x},${cy} ${curr.x},${curr.y}`;
   }
-  return d
+  return d;
 }
 
 export default function TimelineSection() {
@@ -67,7 +66,7 @@ export default function TimelineSection() {
 
       <style>{css}</style>
     </section>
-  )
+  );
 }
 
 const css = `
@@ -132,4 +131,4 @@ const css = `
   line-height: 1.4;
   white-space: pre-line;
 }
-`
+`;
