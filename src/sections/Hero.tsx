@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import coupleImg from '../assets/images/couple.jpg'
 
 export default function Hero() {
   return (
@@ -7,17 +8,12 @@ export default function Hero() {
 
       <h1 style={s.title}>Мы женимся!</h1>
 
-      <div style={s.photoRow}>
-        <div style={s.photoBox}>
-          <div style={s.photoPlaceholder}>🤵</div>
-          <p style={s.photoName}>Коля</p>
-        </div>
-
-        <span style={s.heart}>♥</span>
-
-        <div style={s.photoBox}>
-          <div style={s.photoPlaceholder}>👰</div>
-          <p style={s.photoName}>Наташа</p>
+      <div style={s.photoWrap}>
+        <img src={coupleImg} alt="Коля и Наташа" style={s.photo} />
+        <div style={s.namesRow}>
+          <span style={s.photoName}>Коля</span>
+          <span style={s.heart}>♥</span>
+          <span style={s.photoName}>Наташа</span>
         </div>
       </div>
 
@@ -33,7 +29,7 @@ export default function Hero() {
 const s: Record<string, CSSProperties> = {
   section: {
     textAlign: 'center',
-    padding: '4rem 1.5rem 3rem',
+    padding: '4rem 1.5rem 1rem',
     background: 'var(--color-bg)',
     width: '100%',
     maxWidth: '480px',
@@ -53,44 +49,34 @@ const s: Record<string, CSSProperties> = {
     lineHeight: 1.1,
     marginBottom: '2rem',
   },
-  photoRow: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '1rem',
-    marginBottom: '1.5rem',
-  },
-  photoBox: {
+  photoWrap: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: '0.5rem',
-    flex: 1,
-    maxWidth: '140px',
+    gap: '0.75rem',
+    marginBottom: '1.5rem',
+    margin: '0 -1.5rem 1.5rem',
   },
-  photoPlaceholder: {
+  photo: {
     width: '100%',
-    aspectRatio: '3/4',
-    background: 'var(--color-bg-2)',
-    border: '1px solid var(--color-border)',
-    borderRadius: '8px',
+    display: 'block',
+  },
+  namesRow: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '3rem',
+    gap: '0.75rem',
   },
   photoName: {
     fontFamily: 'var(--font-script)',
     fontSize: '1.6rem',
     color: 'var(--color-bordeaux)',
     fontWeight: 600,
-    margin: 0,
     lineHeight: 1,
   },
   heart: {
-    fontSize: '2rem',
+    fontSize: '1.5rem',
     color: 'var(--color-heart)',
-    flexShrink: 0,
   },
   deco: {
     display: 'flex',

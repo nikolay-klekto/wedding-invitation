@@ -9,7 +9,6 @@ const BLOCK_H = 110
 const TOP_PAD = 20
 const TOTAL_H = events.length * BLOCK_H + TOP_PAD * 2
 const W = 280
-const MID = W / 2
 
 function snakePath() {
   const pts = events.map((ev, i) => ({

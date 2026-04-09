@@ -7,7 +7,6 @@ import LocationSection from './sections/LocationSection'
 import TimelineSection from './sections/TimelineSection'
 import DressCodeSection from './sections/DressCodeSection'
 import DetailsSection from './sections/DetailsSection'
-import ContactSection from './sections/ContactSection'
 import RSVPSection from './sections/RSVPSection'
 import FooterSection from './sections/FooterSection'
 
@@ -32,7 +31,6 @@ function App() {
       <TimelineSection />
       <DressCodeSection />
       <DetailsSection />
-      <ContactSection />
       <RSVPSection />
       <FooterSection />
     </>

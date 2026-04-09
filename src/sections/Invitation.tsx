@@ -23,7 +23,7 @@ export default function Invitation() {
 const s: Record<string, CSSProperties> = {
   section: {
     textAlign: 'center',
-    padding: '3rem 1.5rem 2rem',
+    padding: '1.5rem 1.5rem 2rem',
     maxWidth: '480px',
     width: '100%',
     background: 'var(--color-bg)',
