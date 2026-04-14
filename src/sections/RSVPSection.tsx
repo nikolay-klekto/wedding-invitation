@@ -23,9 +23,15 @@ export default function RSVPSection() {
     drinks: [],
   })
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState(false)
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    if (!form.attending) {
+      setError(true)
+      return
+    }
+    setError(false)
 
     const ACTION = 'https://docs.google.com/forms/u/0/d/1uD5cnzePXL3dN2avd6KHpn-QlVgrCrGC9Gv3gLiAsc4/formResponse'
 
@@ -105,6 +111,7 @@ export default function RSVPSection() {
                 <div style={{
                   ...s.radio,
                   ...(form.attending === val ? s.radioChecked : {}),
+                  ...(error && !form.attending ? s.radioError : {}),
                 }}>
                   {form.attending === val && <div style={s.radioDot} />}
                 </div>
@@ -112,15 +119,17 @@ export default function RSVPSection() {
                   type="radio"
                   name="attending"
                   value={val}
-                  required
                   checked={form.attending === val}
-                  onChange={() => setForm({ ...form, attending: val as FormState['attending'] })}
+                  onChange={() => { setForm({ ...form, attending: val as FormState['attending'] }); setError(false) }}
                   style={{ display: 'none' }}
                 />
                 <span style={s.radioLabel}>{text}</span>
               </label>
             ))}
           </div>
+          {error && !form.attending && (
+            <p style={s.errorText}>Пожалуйста, выберите один из вариантов</p>
+          )}
         </div>
 
         {/* Allergy */}
@@ -247,6 +256,15 @@ const s: Record<string, CSSProperties> = {
   },
   radioChecked: {
     borderColor: 'var(--color-bordeaux)',
+  },
+  radioError: {
+    borderColor: '#c0392b',
+  },
+  errorText: {
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.8rem',
+    color: '#c0392b',
+    marginTop: '0.25rem',
   },
   radioDot: {
     width: '10px',
