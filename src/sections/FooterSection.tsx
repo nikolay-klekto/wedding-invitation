@@ -10,9 +10,7 @@ export default function FooterSection() {
         <span style={s.heart}>♥</span>
       </div>
 
-      <p style={s.quote}>«Любовь никогда не перестаёт»</p>
-
-      <p style={s.brand}>lumivite</p>
+      <p style={s.quote}>«Спасибо, что будете рядом»</p>
     </section>
   )
 }

@@ -7,7 +7,7 @@ export default function DressCodeSection() {
       <h2 style={s.heading}>Дресс-код</h2>
 
       <p style={s.subtitle}>
-        Поддержите нас красивыми нарядами в палитре торжества:
+        Для нас важно создать памятное торжество и красивые фотографии, поэтому мы будем очень рады, если вы нас поддержите и придёте в цветах этого праздника.
       </p>
 
       <img src={dresscodeImg} alt="Дресс-код" style={s.photo} />
@@ -37,7 +37,7 @@ const s: Record<string, CSSProperties> = {
     color: 'var(--color-text-muted)',
     lineHeight: 1.6,
     marginBottom: '1.5rem',
-    maxWidth: '300px',
+    maxWidth: '420px',
     margin: '0 auto 1.5rem',
   },
   photo: {
